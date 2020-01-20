@@ -139,7 +139,22 @@ int main(int argc, char *argv[])
 	int block = (len + 8191) / 8192;
 	
 	for(int i=1;i<block;i++) {
-		flash[0x80+(slot+i)*0x80] = (i == block - 1) ? 0x53 : 0x52;
+		uint8_t *p = flash+0x80+(slot+i)*0x80;
+		
+		p[0] = 0x52;
+		
+		p[127] = 0;
+		
+		p[8] = i+1;
+		p[9] = 0;
+		
+		if(i == block - 1) {
+			p[0] = 0x53;
+			p[8] = 0xff;
+			p[9] = 0xff;
+		}
+		
+		for(int j=0;j<127;j++) p[127] ^= p[j];
 	}
 	
 	FILE *mcr = fopen(s_mcr,"wb");

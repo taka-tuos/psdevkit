@@ -17,6 +17,8 @@ TITLE = "PocketStation Lib Test by Orion_"
 
 all:	${PROG}.bin
 
+.PHONY: data
+
 ${PROG}.bin: ${PROG}
 	${OBJCOPY} -O binary ${PROG} ${PROG}.bin
 	../tools/mcpad/mcpad ${PROG}.bin
