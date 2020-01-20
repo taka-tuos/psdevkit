@@ -1,0 +1,7 @@
+default: $(TARGET)
+
+$(TARGET): $(SOURCE) $(DEPENDS) Makefile ../Makefile.tools
+	$(CC) -o $(TARGET) $(SOURCE) $(LIBS)
+
+fclean:
+	rm $(TARGET)
