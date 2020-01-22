@@ -13,7 +13,7 @@ LDFLAGS	= #-Map ${PROG}.map
 CFLAGS	= -Os -msoft-float -g
 ASFLAGS	=
 
-TITLE = "PocketStation Lib Test by Orion_"
+TITLE = "Flappy Bird by kagura1050"
 
 all:	${PROG}.bin
 
@@ -45,7 +45,7 @@ tool:
 	$(MAKE) -C ../tools
 
 mcs: ${PROG}.bin
-	../tools/bin2mcs/bin2mcs BESNESP00000GAMETEST ${PROG}.bin ${PROG}.mcs
+	../tools/bin2mcs/bin2mcs BESNESP00000FLPYBIRD ${PROG}.bin ${PROG}.mcs
 
 mcr: mcs
 	../tools/mcrtool/mcrtool of=${PROG}.mcr mcs=${PROG}.mcs

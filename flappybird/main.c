@@ -42,6 +42,24 @@ void DrawBird()
 	DrawLCDPix(9,birdy+1);
 }
 
+int GameOver()
+{
+	FastLCDClear();
+	DrawString(0,0,"GAMEOVER");
+	
+	DrawString(0,8,"UP");
+	DrawString(0,14,"RESTART");
+	DrawString(0,20,"DOWN");
+	DrawString(0,26,"EXIT");
+	
+	while(1) {
+		if(PadOnRelease & PAD_UP) break;
+		if(PadOnRelease & PAD_DOWN) return 1;
+		VSync(1);
+	}
+	return 0;
+}
+
 void main(void)
 {
 	PocketInit();
@@ -70,20 +88,13 @@ restart:
 		DrawBird();
 		DrawChar(0,0,'3'-i);
 		VSync(1);
-		for(u8 j=1;j<60;j++) {
-			VSync(0);
-			if(PadOnRelease & PAD_BUTTON) {
-				exitf = 1;
-				break;
-			}
-		}
-		if(exitf) break;
+		for(u8 j=1;j<60;j++) VSync(0);
 	}
 
 	u8 press = 0;
 	u8 pth = 0, ptl = 0;
 
-	while (!exitf) {
+	while (1) {
 		if(PadOnPress & PAD_BUTTON) {
 			if(press == 0) {
 				birdspd = -16;
@@ -98,7 +109,11 @@ restart:
 		if(birdy4 < 0) birdy4 = 0;
 		
 		if((birdy4 >> 4) >= 30) {
-			goto restart;
+			if(GameOver()) {
+				break;
+			} else {
+				goto restart;
+			}
 		}
 		
 		birdy = birdy4 >> 4;
@@ -106,7 +121,11 @@ restart:
 		for(u8 i=0;i<2;i++) {
 			u8 refsc = i*18;
 			if((scrl == 8+refsc || scrl == 9+refsc) && (birdy <= h[i] || birdy+1 >= h[i]+12)) {
-				goto restart;
+				if(GameOver()) {
+					break;
+				} else {
+					goto restart;
+				}
 			}
 		}
 		
