@@ -1,5 +1,5 @@
-# example
-サンプルプロジェクト
+# flappybird
+フラッピーバード
 
 ## How to make MCR file
 ```
