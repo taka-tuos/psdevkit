@@ -1,0 +1,63 @@
+OUTPUT_ARCH(arm)
+MEMORY
+{
+  ram : o = 0x00000204, l = 0x5fc
+  rom : o = 0x02000000, l = 0x1E000
+}
+SECTIONS
+{
+  .text :
+  {
+    *(.text)
+    *(.strings)
+    *(.rodata)
+    *(.rdata)
+     _etext = . ; 
+  }  > rom
+  .rodata :
+  {
+    *(.rodata)
+    *all.rodata*(*)
+    *(.roda)
+    *(.rodata.*)
+    *(.gnu.linkonce.r*)
+    SORT(CONSTRUCTORS)
+    . = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
+  } > rom
+  .tors :
+  {
+    ___ctors = . ;
+    *(.ctors)
+    ___ctors_end = . ;
+    ___dtors = . ;
+    *(.dtors)
+    ___dtors_end = . ;
+  }  > rom
+  .data :
+  {
+    *(.data)
+     _edata = . ; 
+  }  > rom
+  .glue_7 :
+  {
+    *(.glue_7)
+     _glut_7 = . ; 
+  }  > rom
+  .glue_7t :
+  {
+    *(.glue_7t)
+     _glut_7t = . ; 
+  }  > rom
+  .buffer :
+  {
+    *(.buffer)
+     _buffer = . ; 
+  }  > rom
+  .bss :
+  {
+     _bss_start = . ; 
+    *(.bss)
+    *(COMMON)
+     _end = .;
+  }  > ram
+}

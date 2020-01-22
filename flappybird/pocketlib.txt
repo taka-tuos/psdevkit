@@ -1,0 +1,45 @@
+PocketStation Lib - by Orion_ [2013]
+
+http://onorisoft.free.fr/
+onorisoft@free.fr
+
+Based on Miko Hoshina & Martin Korth work.
+
+If you use it, please give credits !
+
+How to compile:
+-Install devkitarm from devkitpro
+-Modify the Makefile to change your program name
+-Modify the makedata.bat to change your program name and icon
+-Change the path in "compil.bat" to match where you installed devkitpro and your make tool.
+-Start "compil.bat"
+
+Details:
+"pocketlib.h" is the Lib and must be included at first in your C file.
+I choose to make a unique .h file for simplicity.
+
+"header.S" is the assembly part with the Memory Card header description.
+This file include:
+-"data\title.txt" which contains the Memory Card title, see "makedata.bat" and "ascii2jis" tool.
+-"data\psicon.bin" which is the MemoryCard icon made from data\icon.tim, see "makedata.bat" and "tim2mcicon" tool.
+-"data\icon.bin" which is the PocketStation icon made from data\icon.bmp, see "makedata.bat" and "bmp2ps1b" tool.
+-"data.s" which can include your binary data (use .globl / .incbin)
+
+Use my tool "bmp2ps1b" to convert your graphic data (32xN 1bit BMP file)
+
+For a complete PocketStation hardware description, see:
+http://nocash.emubase.de/psx-spx.htm#pocketstation
+
+You can emulate your program in the NO$GBA emulator (which include a PocketStation emulator since the 2.7 version)
+http://nocash.emubase.de/gba.htm
+Please donate to this awesome guy !
+
+Or you can upload it on your PocketStation using my Playstation To PocketStation Transfer Tool: (or a PC to MemoryCard reader)
+http://onorisoft.free.fr/psx/psx.htm
+(see at the bottom of the page)
+
+
+Thanks to:
+-Martin Korth for the awesome Playstation & PocketStation Specifications: http://nocash.emubase.de/psx-spx.htm
+-Miko Hoshina for his PocketStation library, which I used as a base for my own lib.
+-Sony for making this awesomely cute tiny console !
