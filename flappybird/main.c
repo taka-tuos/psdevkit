@@ -52,6 +52,8 @@ restart:
 	birdy = 16;
 	scrl = 24;
 	
+	u8 exitf = 0;
+	
 	s16 birdy4 = birdy << 4;
 	
 	s8 birdspd = 0;
@@ -65,16 +67,23 @@ restart:
 	for(u8 i=0;i<3;i++) {
 		FastLCDClear();
 		DrawSticks();
+		DrawBird();
 		DrawChar(0,0,'3'-i);
 		VSync(1);
-		for(u8 j=1;j<60;j++) VSync(0);
+		for(u8 j=1;j<60;j++) {
+			VSync(0);
+			if(PadOnRelease & PAD_BUTTON) {
+				exitf = 1;
+				break;
+			}
+		}
+		if(exitf) break;
 	}
 
 	u8 press = 0;
 	u8 pth = 0, ptl = 0;
 
-	do
-	{
+	while (!exitf) {
 		if(PadOnPress & PAD_BUTTON) {
 			if(press == 0) {
 				birdspd = -16;
@@ -84,9 +93,9 @@ restart:
 			press = 0;
 		}
 		
-		if(birdy4 < 0) birdy4 = 0;
-		
 		birdy4 = birdy4 + birdspd;
+		
+		if(birdy4 < 0) birdy4 = 0;
 		
 		if((birdy4 >> 4) >= 30) {
 			goto restart;
@@ -128,7 +137,7 @@ restart:
 				h[1] = xorshift() % (32-2-12)+1;
 			}
 		}
-	} while (1);
+	}
 
 	PocketExit();
 }
